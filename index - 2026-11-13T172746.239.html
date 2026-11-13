@@ -344,7 +344,9 @@ iframe.pv{width:100%;height:360px;border:0;border-radius:14px;background:#fff;ma
 .gp-body::-webkit-scrollbar{display:none}
 .gp-grid{display:grid;row-gap:8px;justify-content:start}
 .gm.hover .ic{transform:scale(1.3);box-shadow:0 8px 24px rgba(0,0,0,.5);z-index:2}
-#phone.immersive #scrim.on{background:rgba(0,0,0,.92)}
+#phone.immersive #scrim.on{background:rgba(0,0,0,var(--imm-scrim,.92))}
+.pop-bg-layer{position:absolute;inset:-48px;z-index:-1;pointer-events:none;background-image:linear-gradient(rgba(0,0,0,var(--pop-img-dim,0)),rgba(0,0,0,var(--pop-img-dim,0))),var(--pop-img,none);background-size:cover;background-position:center;background-repeat:no-repeat;opacity:var(--pop-img-op,0);filter:blur(var(--pop-img-blur,0px))}
+.pvpop{isolation:isolate;overflow:hidden}
 .res .pin.dl{color:#ff7b72}
 #treeView{position:absolute;z-index:60;display:none;flex-direction:column;gap:2px;width:224px;max-width:calc(100% - 12px);max-height:284px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none;padding:0 8px 8px;border-radius:22px;background:rgba(0,0,0,.97);border:1px solid rgba(255,255,255,.08);box-shadow:0 18px 44px rgba(0,0,0,.9)}
 #treeView::-webkit-scrollbar{display:none}
@@ -415,7 +417,7 @@ iframe.pv{width:100%;height:360px;border:0;border-radius:14px;background:#fff;ma
           <div class="trig-handle end-cap bot-cap" id="trigRzBottom" title="Drag to adjust height"></div>
         </div>
 
-    <div id="pop" role="dialog" aria-label="Quick launcher">
+    <div id="pop" role="dialog" aria-label="Quick launcher"><div class="pop-bg-layer"></div>
                       <div class="grab" id="topBar"></div>
                       <div class="pop-scroll-arrow arr-top" id="popScrollUp"><i class="fa-solid fa-chevron-up"></i></div>
                       <div class="pbody" id="pbody">
@@ -656,8 +658,8 @@ const SYS={
 };
 const HINTS={app:'PackageManager.getLaunchIntentForPackage(pkg) → startActivity()',call:'Intent ACTION_CALL tel:<number> (CALL_PHONE) · or ACTION_DIAL',sms:'Intent ACTION_SENDTO smsto:<number>',email:'Intent ACTION_SENDTO mailto:<address>',folder:'Intent ACTION_VIEW + DocumentsContract URI · MANAGE_EXTERNAL_STORAGE for full access',file:'Intent ACTION_VIEW with FileProvider URI + MIME type',web:'Intent ACTION_VIEW Uri.parse(url)'};
 
-const S_DEF={icon:46,radius:28,cols:4,rows:5,cgap:8,rgap:10,pad:10,lbl:9.5,showLbl:true,showChips:true,w:280,h:420,glass:74,popRad:26,blur:0,trigH:72,trigW:5,trigY:50,trigEdge:'right',haptic:true,autoClose:true,ringSize:42,ringThick:2.5,ringOpacity:40,triggerEnabled:true,permOverlay:true,permAcc:true,permStorage:true,permWriteSettings:true,permDnd:false,permPhone:true,permBattery:false,permAutostart:false,hideTrigger:false,trigColor:'#ffffff',gridPos:'bottom',hideEditBtn:false,leftHand:false,disableImmersive:true,trigOpacity:80,shapeMask:'default',dwellDelay:300,swipeUpAct:'notif',swipeDownAct:'recents',disableInLandscape:false,activeTheme:'default',cornerSlider:true,cornerSliderPos:'tr'};
-const CTRL=[['icon','Icon size',16,78,1,'px'],['radius','Icon roundness',0,50,1,'%'],['cols','Columns',2,24,1,''],['rows','Rows',2,50,1,''],['cgap','Column spacing',0,34,1,'px'],['rgap','Row spacing',0,38,1,'px'],['pad','Popup padding',4,34,1,'px'],['lbl','Label size',7,15,.5,'px'],['w','Popup width',240,520,1,'px'],['h','Popup height',260,780,1,'px'],['glass','Glass opacity',30,100,1,'%'],['groupGlass','App group opacity',20,100,1,'%'],['popRad','Popup corner radius',0,40,1,'px'],['trigH','Trigger length',40,1000,4,'px'],['trigW','Trigger width',3,20,1,'px'],['trigY','Trigger location',10,90,1,'%'],['ringSize','Ring diameter',30,90,1,'px'],['ringThick','Ring thickness',1,8,0.5,'px'],['ringOpacity','Ring opacity',10,100,2,'%'],['trigOpacity','Trigger opacity',0,100,5,'%'],['dwellDelay','Hover dwell delay',150,600,25,'ms']];
+const S_DEF={icon:46,radius:28,cols:4,rows:5,cgap:8,rgap:10,pad:10,lbl:9.5,showLbl:true,showChips:true,w:280,h:420,glass:74,popRad:26,blur:0,trigH:72,trigW:5,trigY:50,trigEdge:'right',haptic:true,autoClose:true,ringSize:42,ringThick:2.5,ringOpacity:40,triggerEnabled:true,permOverlay:true,permAcc:true,permStorage:true,permWriteSettings:true,permDnd:false,permPhone:true,permBattery:false,permAutostart:false,hideTrigger:false,trigColor:'#ffffff',gridPos:'bottom',hideEditBtn:false,leftHand:false,disableImmersive:true,trigOpacity:80,shapeMask:'default',dwellDelay:300,swipeUpAct:'notif',swipeDownAct:'recents',disableInLandscape:false,activeTheme:'default',cornerSlider:true,cornerSliderPos:'tr',popBgOp:100,popBgDim:40,popBgBlur:0};
+const CTRL=[['icon','Icon size',16,78,1,'px'],['radius','Icon roundness',0,50,1,'%'],['cols','Columns',2,24,1,''],['rows','Rows',2,50,1,''],['cgap','Column spacing',0,34,1,'px'],['rgap','Row spacing',0,38,1,'px'],['pad','Popup padding',4,34,1,'px'],['lbl','Label size',7,15,.5,'px'],['w','Popup width',240,520,1,'px'],['h','Popup height',260,780,1,'px'],['glass','Glass opacity',0,100,1,'%'],['groupGlass','App group opacity',0,100,1,'%'],['popBgOp','Wallpaper opacity',0,100,1,'%'],['popBgDim','Wallpaper dimming',0,100,1,'%'],['popBgBlur','Wallpaper blur',0,100,1,'%'],['popRad','Popup corner radius',0,40,1,'px'],['trigH','Trigger length',40,1000,4,'px'],['trigW','Trigger width',3,20,1,'px'],['trigY','Trigger location',10,90,1,'%'],['ringSize','Ring diameter',30,90,1,'px'],['ringThick','Ring thickness',1,8,0.5,'px'],['ringOpacity','Ring opacity',10,100,2,'%'],['trigOpacity','Trigger opacity',0,100,5,'%'],['dwellDelay','Hover dwell delay',150,600,25,'ms']];
 const CTRL_MAP=new Map(CTRL.map(c=>[c[0],c]));
 
 const DEF=[
@@ -748,13 +750,19 @@ function haptic(type){
 function closeLayers(){closeSim();closeStudio();['#recents','#notif','#lock'].forEach(s=>$(s).style.display='none');closeSheet();closePop()}
 
 /* ───────── popup: apply layout ───────── */
-function immEff(o,ph){if(!o||!o.immersive)return o;return{...o,icon:Math.min(o.icon*1.3,88),lbl:o.lbl*1.15,pad:o.pad+6,popRad:0,glass:Math.max(o.glass,88)}}
+function immEff(o,ph){if(!o||!o.immersive)return o;return{...o,icon:Math.min(o.icon*1.3,88),lbl:o.lbl*1.15,pad:o.pad+6,popRad:0}}
 function hasPopBg(s){return s.popBg==='wallpaper'||(s.popBg==='custom'&&!!s.popBgData)}
 function popBgCss(s){
-  const g=(s.glass>=100?100:s.glass)/100;
-  if(!hasPopBg(s))return s.glass>=100?'#000000':`rgba(0,0,0,${g})`;
-  const tint=`linear-gradient(rgba(0,0,0,${g}),rgba(0,0,0,${g}))`;
-  return s.popBg==='wallpaper'?tint+',linear-gradient(165deg,#3b2a6b,#14213d 55%,#0b0b12)':tint+',url("'+s.popBgData+'") center/cover no-repeat';
+  const g=clamp(s.glass,0,100)/100;
+  return s.glass>=100?'#000000':`rgba(0,0,0,${g})`;
+}
+function popImgVars(el,s){
+  const on=hasPopBg(s),v=(k,x)=>el.style.setProperty(k,x);
+  const op=s.popBgOp!=null?s.popBgOp:100,dim=s.popBgDim!=null?s.popBgDim:40,bl=s.popBgBlur!=null?s.popBgBlur:0;
+  v('--pop-img',on?(s.popBg==='wallpaper'?'linear-gradient(165deg,#3b2a6b,#14213d 55%,#0b0b12)':'url("'+s.popBgData+'")'):'none');
+  v('--pop-img-op',on?(clamp(op,0,100)/100):0);
+  v('--pop-img-dim',clamp(dim,0,100)/100);
+  v('--pop-img-blur',(clamp(bl,0,100)*0.3).toFixed(1)+'px');
 }
 function applySet(){const ph=phone.getBoundingClientRect(),s=immEff(st.set,ph);
   const v=(k,x)=>pop.style.setProperty(k,x);
@@ -762,8 +770,10 @@ function applySet(){const ph=phone.getBoundingClientRect(),s=immEff(st.set,ph);
   v('--icon',s.icon+'px');v('--rad',s.radius);v('--cols',s.cols);v('--rows',s.rows||5);v('--cgap',s.cgap+'px');v('--rgap',s.rgap+'px');v('--pad',s.pad+'px');v('--lbl',s.lbl+'px');v('--glass',s.glass/100);
   v('--pop-rad',(s.popRad!=null?s.popRad:26)+'px');
   v('--pop-bg',isFullBlack?'#000000':`rgba(0,0,0,${s.glass/100})`);
-  pop.classList.toggle('solid-black',isFullBlack&&!hasPopBg(s));
-    v('--pop-bg',popBgCss(s));
+  pop.classList.toggle('solid-black',isFullBlack);
+      v('--pop-bg',popBgCss(s));
+      popImgVars(pop,s);
+      phone.style.setProperty('--imm-scrim',clamp(s.glass,0,100)/100);
     v('--gglass',(s.groupGlass!=null?s.groupGlass:100)/100);
     phone.classList.toggle('immersive',!!s.immersive);
   const isLandscape=phone.classList.contains('landscape');
@@ -1379,8 +1389,9 @@ function setVars(el,s){
   v('--glass',s.glass/100);
   v('--pop-rad',(s.popRad!=null?s.popRad:26)+'px');
   v('--pop-bg',isFullBlack?'#000000':`rgba(0,0,0,${s.glass/100})`);
-  el.classList.toggle('solid-black',isFullBlack&&!hasPopBg(s));
-    v('--pop-bg',popBgCss(s));
+  el.classList.toggle('solid-black',isFullBlack);
+      v('--pop-bg',popBgCss(s));
+      popImgVars(el,s);
 }
 function pvUpdate(){
   const stage=$('#stPrev'),phoneBox=$('#stPhone'),screen=$('#stScreen'),p=$('#pvpop'),pvF=$('#pvFab');
@@ -1511,6 +1522,7 @@ function syncSl(){
     const pbUp=$('#popBgUp');if(pbUp)pbUp.innerHTML='<i class="fa-solid fa-image"></i> '+(st.set.popBgData?'Change image':'Upload image');
     const pbRm=$('#popBgRm');if(pbRm)pbRm.style.display=st.set.popBgData?'':'none';
     const pbNote=$('#popBgNote');if(pbNote)pbNote.style.display=(st.set.popBg==='wallpaper'&&!st.set.permStorage)?'block':'none';
+        const pbCtl=$('#popBgCtl');if(pbCtl)pbCtl.style.display=hasPopBg(st.set)?'block':'none';
     const swUp=$('#ovSwipeUp');if(swUp)swUp.value=st.set.swipeUpAct||'notif';
   const swDn=$('#ovSwipeDown');if(swDn)swDn.value=st.set.swipeDownAct||'recents';
 }
@@ -1520,7 +1532,7 @@ const SET_GROUPS={
   popup:{
       keys:['w','h','glass','groupGlass','popRad'],
       title:'Pop-up Size & Styling',
-            extra:`<div class="sw" style="margin-top:12px"><div><b style="display:block;font-size:13px">Immersive mode</b><small style="color:var(--dim)">Popup covers the whole screen with bigger icons (Width / Height are ignored)</small></div><button class="tg" id="ovImmersive"></button></div><div style="margin:12px 0 4px"><b style="display:block;font-size:13px">Popup background</b><small style="color:var(--dim);display:block;margin:2px 0 8px">A picture behind the popup. Lower "Glass opacity" to let it show through.</small><div class="seg" id="popBgSeg" style="grid-template-columns:repeat(3,1fr)"><button data-pb="none">None</button><button data-pb="wallpaper">My wallpaper</button><button data-pb="custom">My image</button></div><div style="display:flex;gap:8px;margin-top:8px"><button class="sbtn" id="popBgUp" type="button" style="margin:0;padding:8px 14px"><i class="fa-solid fa-image"></i> Upload image</button><button class="sbtn" id="popBgRm" type="button" style="margin:0;padding:8px 14px;color:#ff7b72;background:rgba(229,83,75,.14);display:none">Remove</button></div><input type="file" id="popBgFile" accept="image/*" style="display:none"><div id="popBgNote" style="display:none;font-size:11px;color:#ffbf00;margin-top:6px">Reading the wallpaper needs file access: turn it on in Overview.</div></div>`
+            extra:`<div class="sw" style="margin-top:12px"><div><b style="display:block;font-size:13px">Immersive mode</b><small style="color:var(--dim)">Popup covers the whole screen with bigger icons (Width / Height are ignored)</small></div><button class="tg" id="ovImmersive"></button></div><div style="margin:12px 0 4px"><b style="display:block;font-size:13px">Popup background</b><small style="color:var(--dim);display:block;margin:2px 0 8px">A picture behind the popup. Set its opacity, dimming and blur below. "Glass opacity" is the panel colour behind it.</small><div class="seg" id="popBgSeg" style="grid-template-columns:repeat(3,1fr)"><button data-pb="none">None</button><button data-pb="wallpaper">My wallpaper</button><button data-pb="custom">My image</button></div><div style="display:flex;gap:8px;margin-top:8px"><button class="sbtn" id="popBgUp" type="button" style="margin:0;padding:8px 14px"><i class="fa-solid fa-image"></i> Upload image</button><button class="sbtn" id="popBgRm" type="button" style="margin:0;padding:8px 14px;color:#ff7b72;background:rgba(229,83,75,.14);display:none">Remove</button></div><input type="file" id="popBgFile" accept="image/*" style="display:none"><div id="popBgNote" style="display:none;font-size:11px;color:#ffbf00;margin-top:6px">Reading the wallpaper needs file access: turn it on in Overview.</div><div id="popBgCtl" style="display:none;margin-top:12px"><div class="sg"><div class="row"><span>Wallpaper opacity</span><span id="v_popBgOp"></span></div><input type="range" data-k="popBgOp" min="0" max="100" step="1"></div><div class="sg"><div class="row"><span>Wallpaper dimming</span><span id="v_popBgDim"></span></div><input type="range" data-k="popBgDim" min="0" max="100" step="1"></div><div class="sg"><div class="row"><span>Wallpaper blur</span><span id="v_popBgBlur"></span></div><input type="range" data-k="popBgBlur" min="0" max="100" step="1"></div></div></div>`
     },
   trigger:{
         keys:['trigH','trigW','trigY','trigOpacity','dwellDelay'],
@@ -1950,7 +1962,7 @@ function openStudio(fromPop=false){
   const s=$('#studio');
   if(!s)return;
   s.style.display='flex';
-  s.innerHTML=`${stOpenedFromPop?`<div style="display:flex;align-items:center;justify-content:flex-end;padding:12px 14px 2px;flex-shrink:0"><button id="stDoneBtn" class="sbtn" style="margin:0;padding:6px 16px;background:var(--acc);color:#fff;border-color:transparent;font-weight:700"><i class="fa-solid fa-check"></i> Done</button></div>`:''}<div class="stp" id="stPrev" style="margin-top:${stOpenedFromPop?'4px':'14px'}"><span class="tag" id="stTag">Live preview</span><div class="stp-bg"></div><div class="stp-phone" id="stPhone"><div class="stp-screen" id="stScreen"><div class="pv-fab" id="pvFab"></div><div class="pvpop" id="pvpop"><div class="pbody" style="padding:var(--pad);scrollbar-width:none"><div id="pvgrid"></div></div></div></div></div><div class="ring-preview-area" id="ringArea"><div class="ring-preview-card" id="ringCard"><div class="ring-sim-pointer" id="ringSimPointer"></div><div class="ring-preview-grid" id="ringGrid"></div></div></div></div><div class="stabs" id="stTabs"><button data-t="general">Overview</button><button data-t="items">Shortcuts</button><button data-t="grid">Grid</button><button data-t="icons">Icons</button><button data-t="popup">Popup</button><button data-t="trigger">Trigger</button><button data-t="folder">Folder</button><button data-t="ring">Selection Ring</button></div><div class="stbody" id="stBody"></div>`;
+  s.innerHTML=`${stOpenedFromPop?`<div style="display:flex;align-items:center;justify-content:flex-end;padding:12px 14px 2px;flex-shrink:0"><button id="stDoneBtn" class="sbtn" style="margin:0;padding:6px 16px;background:var(--acc);color:#fff;border-color:transparent;font-weight:700"><i class="fa-solid fa-check"></i> Done</button></div>`:''}<div class="stp" id="stPrev" style="margin-top:${stOpenedFromPop?'4px':'14px'}"><span class="tag" id="stTag">Live preview</span><div class="stp-bg"></div><div class="stp-phone" id="stPhone"><div class="stp-screen" id="stScreen"><div class="pv-fab" id="pvFab"></div><div class="pvpop" id="pvpop"><div class="pop-bg-layer"></div><div class="pbody" style="padding:var(--pad);scrollbar-width:none"><div id="pvgrid"></div></div></div></div></div><div class="ring-preview-area" id="ringArea"><div class="ring-preview-card" id="ringCard"><div class="ring-sim-pointer" id="ringSimPointer"></div><div class="ring-preview-grid" id="ringGrid"></div></div></div></div><div class="stabs" id="stTabs"><button data-t="general">Overview</button><button data-t="items">Shortcuts</button><button data-t="grid">Grid</button><button data-t="icons">Icons</button><button data-t="popup">Popup</button><button data-t="trigger">Trigger</button><button data-t="folder">Folder</button><button data-t="ring">Selection Ring</button></div><div class="stbody" id="stBody"></div>`;
   const doneBtn=$('#stDoneBtn');
   if(doneBtn){
     doneBtn.onclick=()=>{
@@ -1981,7 +1993,7 @@ function openStudio(fromPop=false){
                   const g=SET_GROUPS[sTab]||SET_GROUPS.grid;
                   g.keys.forEach(k=>{st.set[k]=S_DEF[k]});
                   if(sTab==='icons')st.set.showLbl=S_DEF.showLbl;
-                  if(sTab==='popup'){st.set.immersive=false;st.set.popBg='none'}
+                  if(sTab==='popup'){st.set.immersive=false;st.set.popBg='none';st.set.popBgOp=S_DEF.popBgOp;st.set.popBgDim=S_DEF.popBgDim;st.set.popBgBlur=S_DEF.popBgBlur}
                   if(sTab==='trigger'){st.set.trigEdge='right';st.set.leftHand=false;st.set.hideTrigger=false;st.set.tapKeepsOpen=false;st.btn=null}
                   if(sTab==='folder')st.set.cornerSlider=true;
                   applySet();placeFab();syncSl();pvUpdate();updateCornerSlider();save();toast('Settings reset');return}
